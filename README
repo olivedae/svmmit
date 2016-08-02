@@ -1,0 +1,29 @@
+
+
+                  /\                /\
+               /\/  \              /  \/\
+              /  \   /\  svmmit  /\   /  \
+             -----------        -----------
+
+
+
+    $ What is svmmit?
+
+      Svmmit (pronounced summit) allows for expressive
+      and minimal searches of commits and
+      revisions for projects using SVN.
+
+
+    $ e.g.
+
+      Currently working on a issue and discover
+      that there appears to be missing files
+      and/or code. In the example below, the file was
+      deleted in r12376
+
+      $ svmmit ~/branch --limit none ^/class\s+(SomeClass|TestClass|ExampleClass)/
+      $ Mentioned in: r12340, Related modifications: r12345, r12376
+      $ > info {r12345, r12376}
+      $ -- Emits info about the branches and so on --
+      $ > knit {r12340, r12345}
+      $ -- Emits full file --
