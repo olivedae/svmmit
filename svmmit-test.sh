@@ -30,7 +30,7 @@ it_correctly_sets_limits() {
 }
 
 it_correctly_sets_file() {
-    mentioned=$($svmmit $branch --file a.php "(class)")
+  mentioned=$($svmmit $branch --file a.php "(class)")
 
-    test "$mentioned" "=" "Mentioned in: r2"
+  test "$mentioned" "=" "Mentioned in: r2"
 }
