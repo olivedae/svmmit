@@ -68,7 +68,6 @@ if [[ ! $1 || $1 =~ ^(--help|-h)$ || ! $2 ]]; then
 fi
 
 dir=$1
-pattern=$2
 revs=()
 limit=false
 file=false
@@ -77,13 +76,15 @@ while test $# -gt 0
 do
   if [[ $1 =~ ^(--limit|-l)$ ]]; then
     shift
-    $limit=$1
+    limit=$1
   fi
 
   if [[ $1 =~ ^(--file|-f)$ ]]; then
     shift
-    $file=$1
+    file=$1
   fi
+
+  pattern=$1
 
   shift
 done

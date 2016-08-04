@@ -22,3 +22,15 @@ it_displays_simple_findings() {
 
   test "$mentioned" "=" "Mentioned in: r5, r4, r3, r2"
 }
+
+it_correctly_sets_limits() {
+  mentioned=$($svmmit $branch --limit 2 "(class)")
+
+  test "$mentioned" "=" "Mentioned in: r5, r4"
+}
+
+it_correctly_sets_file() {
+    mentioned=$($svmmit $branch --file a.php "(class)")
+
+    test "$mentioned" "=" "Mentioned in: r2"
+}
