@@ -1,27 +1,32 @@
 #!/bin/sh
 
+function join() {
+  delim=$1
+  shift
+  vals=("$@")
+  str=""
+  is_first=true
+
+  for val in "${vals[@]}"
+  do
+    if [ $is_first == false ]; then
+      str+="$delim"
+    fi
+
+    str+="$val"
+    is_first=false
+  done
+
+  echo "$str"
+}
+
 function parse_commit() {
   diff=(svn diff -c -$1)
   if ! [ $file == false ]; then
     diff+=($file)
   fi
 
-  # diff=$(join " " $diff)
-
-  str=""
-  delim=" "
-  is_first=true
-  for val in "${diff[@]}"
-  do
-    if [ $is_first == false ]; then
-      str+="$delim"
-    fi
-    str+=$val
-
-    is_first=false
-  done
-
-  diff=$str
+  diff=$(join " " "${diff[@]}")
 
   for diff in $($diff)
   do
@@ -41,20 +46,7 @@ function echo_stats() {
     exit
   fi
 
-  str=""
-  delim=", "
-  is_first=true
-  for val in "${revs[@]}"
-  do
-    if [ $is_first == false ]; then
-      str+="$delim"
-    fi
-    str+=$val
-
-    is_first=false
-  done
-
-  echo $str
+  join ", " "${revs[@]}"
 }
 
 function echo_usage() {
@@ -106,23 +98,9 @@ if ! [ $file == false ]; then
   logs+=($file)
 fi
 
+logs=$(join " " "${logs[@]}")
+
 cd $dir
-
-str=""
-
-delim=" "
-is_first=true
-for val in "${logs[@]}"
-do
-  if [ $is_first == false ]; then
-    str+="$delim"
-  fi
-  str+=$val
-
-  is_first=false
-done
-
-logs=$str
 
 for commit in $($logs)
 do
