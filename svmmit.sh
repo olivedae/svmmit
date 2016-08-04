@@ -32,7 +32,7 @@ function parse_commit() {
 
   pattern="$(echo $pattern | perl -pe 's/\\s(\*|\+|\?)/[[:space:]]/g')"
 
-  if [[ $diff =~ $pattern ]]; then
+  if [[ "$diff" =~ $pattern ]]; then
     revs+=($1)
   fi
 }
