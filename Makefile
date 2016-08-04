@@ -23,4 +23,4 @@ fill-%:
 	svn up
 
 clean:
-	rm -rf .tests {a..f}.php
+	rm -rf .tests
