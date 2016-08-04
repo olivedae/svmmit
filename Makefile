@@ -19,7 +19,8 @@ fill-%:
 	cd .tests/working_copy && \
 	echo "<?php\n\nclass $* {\n\tpublic function testing() {\n\n\t}\n}" > $*.php && \
 	svn add $*.php && \
-	svn commit -m "Example commit $*"
+	svn commit -m "Example commit $*" && \
+	svn up
 
 clean:
 	rm -rf .tests {a..f}.php
