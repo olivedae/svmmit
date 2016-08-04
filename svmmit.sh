@@ -21,22 +21,23 @@ function join() {
 }
 
 function parse_commit() {
-  diff=(svn diff -c -$1)
+  cmd=(svn diff -c -$1)
   if ! [ $file == false ]; then
-    diff+=($file)
+    cmd+=($file)
   fi
 
-  diff=$(join " " "${diff[@]}")
+  cmd=$(join " " "${cmd[@]}")
 
-  for diff in $($diff)
-  do
-    if [[ $diff =~ $pattern ]]; then
-      revs+=($1)
-    fi
-  done
+  diff="$($cmd)"
+
+  pattern="$(echo $pattern | perl -pe 's/\\s(\*|\+|\?)/[[:space:]]/g')"
+
+  if [[ $diff =~ $pattern ]]; then
+    revs+=($1)
+  fi
 }
 
-function echo_stats() {
+function mentions() {
   printf "Mentioned in: "
 
   count=${#revs[@]}
@@ -49,22 +50,22 @@ function echo_stats() {
   join ", " "${revs[@]}"
 }
 
-function echo_usage() {
+function help() {
   echo "usage: svmmit [--help|-h] [--version|-v] [directory] [search]"
   exit
 }
 
-function echo_version() {
+function version() {
   echo "0.0.1"
   exit
 }
 
 if [[ $1 =~ ^(--version|-v)$ ]]; then
-  echo_version
+  version
 fi
 
 if [[ ! $1 || $1 =~ ^(--help|-h)$ || ! $2 ]]; then
-  echo_usage
+  help
 fi
 
 dir=$1
@@ -110,4 +111,4 @@ do
   fi
 done
 
-echo_stats
+mentions

@@ -12,25 +12,25 @@ it_displays_usage() {
 }
 
 it_displays_no_findings() {
-  mentioned=$($svmmit $branch "class\s+(NotHere)")
+  mentioned=$($svmmit $branch "class\s+[NotHere]")
 
   test "$mentioned" "=" "Mentioned in: none"
 }
 
 it_displays_simple_findings() {
-  mentioned=$($svmmit $branch "(class)")
+  mentioned=$($svmmit $branch class)
 
   test "$mentioned" "=" "Mentioned in: r5, r4, r3, r2"
 }
 
 it_correctly_sets_limits() {
-  mentioned=$($svmmit $branch --limit 2 "(class)")
+  mentioned=$($svmmit $branch --limit 2 "class\s+[a|b|c]")
 
-  test "$mentioned" "=" "Mentioned in: r5, r4"
+  test "$mentioned" "=" "Mentioned in: r4"
 }
 
 it_correctly_sets_file() {
-  mentioned=$($svmmit $branch --file a.php "(class)")
+  mentioned=$($svmmit $branch --file a.php "class\s+[a|b|c]")
 
   test "$mentioned" "=" "Mentioned in: r2"
 }
